@@ -13570,7 +13570,9 @@ var _aische$elm_lambda_interpreter$Main$Model = F6(
 		return {term: a, input: b, auto: c, deltaTime: d, viewFlags: e, factor: f};
 	});
 var _aische$elm_lambda_interpreter$Main$Cps = {ctor: 'Cps'};
-var _aische$elm_lambda_interpreter$Main$LoadExample = {ctor: 'LoadExample'};
+var _aische$elm_lambda_interpreter$Main$LoadExample = function (a) {
+	return {ctor: 'LoadExample', _0: a};
+};
 var _aische$elm_lambda_interpreter$Main$SetInput = function (a) {
 	return {ctor: 'SetInput', _0: a};
 };
@@ -13796,7 +13798,7 @@ var _aische$elm_lambda_interpreter$Main$update = F2(
 									_aische$elm_lambda_interpreter$Main$Inc,
 									A2(_elm_lang$core$Result$map, _aische$elm_lambda_interpreter$Main$SetInput, r));
 							},
-							_elm_lang$http$Http$getString('example.txt'))
+							_elm_lang$http$Http$getString(_p2._0))
 					};
 				case 'Cps':
 					return {
@@ -14074,7 +14076,7 @@ var _aische$elm_lambda_interpreter$Main$view = function (model) {
 																ctor: '::',
 																_0: _elm_lang$html$Html$text(
 																	_elm_lang$core$Basics$toString(
-																		_elm_lang$core$Basics$toFloat(model.deltaTime) * 0.1)),
+																		_elm_lang$core$Basics$toFloat(model.deltaTime) / 10.0)),
 																_1: {
 																	ctor: '::',
 																	_0: A2(
@@ -14150,7 +14152,8 @@ var _aische$elm_lambda_interpreter$Main$view = function (model) {
 								_elm_lang$html$Html$button,
 								{
 									ctor: '::',
-									_0: _elm_lang$html$Html_Events$onClick(_aische$elm_lambda_interpreter$Main$LoadExample),
+									_0: _elm_lang$html$Html_Events$onClick(
+										_aische$elm_lambda_interpreter$Main$LoadExample('example.txt')),
 									_1: {ctor: '[]'}
 								},
 								{
@@ -14158,7 +14161,23 @@ var _aische$elm_lambda_interpreter$Main$view = function (model) {
 									_0: _elm_lang$html$Html$text('example'),
 									_1: {ctor: '[]'}
 								}),
-							_1: {ctor: '[]'}
+							_1: {
+								ctor: '::',
+								_0: A2(
+									_elm_lang$html$Html$button,
+									{
+										ctor: '::',
+										_0: _elm_lang$html$Html_Events$onClick(
+											_aische$elm_lambda_interpreter$Main$LoadExample('example2.txt')),
+										_1: {ctor: '[]'}
+									},
+									{
+										ctor: '::',
+										_0: _elm_lang$html$Html$text('example2'),
+										_1: {ctor: '[]'}
+									}),
+								_1: {ctor: '[]'}
+							}
 						},
 						A2(
 							_elm_lang$core$List$map,
