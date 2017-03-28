@@ -100,7 +100,7 @@ type Msg
   | SetOrder Lambda.EvaluationOrder
   | SetExample String
   | SetInput String
-  | LoadExample
+  | LoadExample String
   | Cps
 
 update : Msg -> Model -> (Model, Cmd Msg)
@@ -205,9 +205,9 @@ update msg model =
             }
           , Cmd.none 
           )
-    LoadExample ->
+    LoadExample url ->
       ( model
-      , Http.send (\r -> Result.withDefault (Inc) <| Result.map SetInput r) (Http.getString "example.txt")
+      , Http.send (\r -> Result.withDefault (Inc) <| Result.map SetInput r) (Http.getString url)
       )
 
     Cps ->
@@ -289,7 +289,7 @@ view model =
       , button [onClick (Cps)] [text "cps"] 
       , button [onClick (SetDeltaTime (model.deltaTime - 1))] [text "faster"] 
       , button [onClick (SetDeltaTime (model.deltaTime + 1))] [text "slower"] 
-      , text (toString (toFloat model.deltaTime * 0.1))
+      , text (toString (toFloat model.deltaTime / 10.0))
       , button [onClick CopyTermToInput] [text "copy to input"] 
       , button [onClick Dec] [text "-"]
       , text " zoom "
@@ -297,7 +297,8 @@ view model =
       ]
     )
   , div []
-    ( [ button [onClick (LoadExample)] [text "example"] 
+    ( [ button [onClick (LoadExample "example.txt")] [text "example"] 
+      , button [onClick (LoadExample "example2.txt")] [text "example2"] 
       ] 
       
       ++
